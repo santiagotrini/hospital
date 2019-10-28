@@ -53,6 +53,19 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+// configurar middleware para parser JSON y formularios
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// configurar middleware para guardar sesiones
+app.use(session({
+  secret: 'olimpiadas inet',
+  resave: false,
+  saveUninitialized: false
+}));
+// inicializar passport como middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // configurar el motor y carpeta de vistas
 // uso pug como motor de plantillas
 app.set('view engine', 'pug');
@@ -62,14 +75,25 @@ app.set('views', './views');
 app.use(express.static('public'));
 
 // rutas
+// home route
 app.get('/', (req, res, next) => {
-  let user = {
-    name: 'Juan',
-    role: 'doctor',
-    email: 'juan@hospital.com'
-  };
-  res.render('index', { user: null });
+  res.render('index', { user: req.user });
 });
+
+// login route
+app.post('/login',
+  passport.authenticate('local', { failureRedirect: '/' }),
+  (req, res, next) => {
+    res.redirect('/');
+});
+
+// logout route
+app.get('/logout',
+  (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
+
 
 // poner la app a escuchar peticiones
 app.listen(port, () => console.log(`Server listening on port ${port}`));

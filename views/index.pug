@@ -1,14 +1,18 @@
 extends layout
 
 block content
-  header
-    h1 Hospital
-    p Esto es un header
-    hr
+  header.jumbotron
+    h1.display-4 Hospital INET
+    p.lead Esto es un header
+    hr.my-4
+    p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam faucibus, felis convallis finibus iaculis, massa neque pellentesque nisi, in tristique risus leo at sem. Suspendisse potenti.
+    a.btn.btn-primary.btn-lg(href='#') Call to action  
   main
     if (user)
-      h3 Bienvenido #{user.name}
+      h3 Bienvenido #{user.firstName}
     p Este es el main
     hr
   footer
     p Este es el footer  
+
+    

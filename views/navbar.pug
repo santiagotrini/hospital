@@ -18,10 +18,12 @@
     }
   }
 
-nav.navbar.navbar-light.navbar-expand-lg.bg-light
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
   a.navbar-brand Hospital
-  div.collapse.navbar-collapse
-    ul.navbar-nav
+  button.navbar-toggler(data-toggle='collapse' data-target='navContent' aria-controls='navContent')
+    span.navbar-toggler-icon
+  div#navContent.collapse.navbar-collapse
+    ul.navbar-nav.ml-auto
       each item in menu
         li.nav-item
           a(data-toggle='modal' data-target='#login').nav-link= item
