@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  header
+    h1 Hospital
+    p Esto es un header
+    hr
+  main
+    if (user)
+      h3 Bienvenido #{user.name}
+    p Este es el main
+    hr
+  footer
+    p Este es el footer  

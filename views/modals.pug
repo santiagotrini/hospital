@@ -1,0 +1,14 @@
+#login.modal.fade(tabindex='-1')
+   .modal-dialog
+       .modal-content
+          .modal-header
+            h5 Inciar sesion
+          .modal-body
+            form(method='post' action='/login')
+              .form-group
+                label Usuario
+                input.form-control(name='username')
+              .form-group
+                label Contraseña
+                input.form-control(name='password' type='password')
+              input.btn.btn-primary(type='submit' value='Ingresar')    

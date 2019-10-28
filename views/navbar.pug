@@ -1,0 +1,29 @@
+-
+  // armo el menu de la nav en base al rol del usuario
+  let menu = [];
+  let links = [];
+  if (!user) { 
+    menu.push('Login');
+  } else { 
+    menu.push('Logout');
+    if (user.role == 'admin') menu.push('Ver asistencias');
+    if (user.role == 'patient') {
+      menu.push('Sacar turno');
+      menu.push('Ver historia clinica');  
+    }
+    else if (user.role == 'doctor') {
+      menu.push('Alta de paciente');
+      menu.push('Ver pacientes');
+      menu.push('Ver estudios');
+    }
+  }
+
+nav.navbar.navbar-light.navbar-expand-lg.bg-light
+  a.navbar-brand Hospital
+  div.collapse.navbar-collapse
+    ul.navbar-nav
+      each item in menu
+        li.nav-item
+          a(data-toggle='modal' data-target='#login').nav-link= item
+          
+include modals.pug          
