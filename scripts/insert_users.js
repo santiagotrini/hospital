@@ -5,7 +5,7 @@ const bcrypt   = require('bcrypt');
 const mongoose = require('mongoose');
 
 // URI de la db
-const db     = process.env.MONGODB_URI || 'mongodb://localhost/hospital';
+const db = process.env.MONGODB_URI || 'mongodb://localhost/hospital';
 // usando mongoose.set para sacar algunos deprecation warnings
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);

@@ -76,7 +76,9 @@ app.use(express.static('public'));
 
 // importar y vincular los routers de la carpeta routes
 const indexRouter = require('./routes/index');
+const userRouter  = require('./routes/api/user');
 app.use('/', indexRouter);
+app.use('/api', userRouter);
 
 // poner la app a escuchar peticiones
 app.listen(port, () => console.log(`Server listening on port ${port}`));
