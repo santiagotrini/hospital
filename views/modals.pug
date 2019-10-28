@@ -12,3 +12,43 @@
                 label Contraseña
                 input.form-control(name='password' type='password')
               input.btn.btn-primary(type='submit' value='Ingresar')    
+
+#newAppointment.modal.fade(tabindex='-1')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5 Solicitar nuevo turno
+      .modal-body
+        form(method='post' action='/appointment')
+          .form-group
+            label Especialidad
+            input.form-control(name='specialty')
+          .form-group
+            label Fecha
+            input.form-control(type='date' name='date')
+          .form-group
+            label Horario
+            input.form-control(type='time' name='time' min='09:00' max='17:00' step='900')        
+          input.btn.btn-primary(type='submit' value='Solicitar turno')
+            
+#newPatient.modal.fade(tabindex='-1')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5 Ingresar nuevo paciente
+      .modal-body
+        form(method='post' action='/patient')
+          .form-group
+            label Nombre
+            input.form-control(name='firstName')
+          .form-group
+            label Apellido
+            input.form-control(name='lastName')
+          .form-group
+            label DNI 
+            input.form-control(name='dni')    
+          .form-group
+            label Fecha de nacimiento
+            input.form-control(type='date' name='birthDate')        
+          input.btn.btn-primary(type='submit' value='Ingresar')
+                

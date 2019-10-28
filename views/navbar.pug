@@ -1,31 +1,31 @@
 -
   // armo el menu de la nav en base al rol del usuario
   let menu = [];
-  let links = [];
-  if (!user) { 
-    menu.push('Login');
+  if (!user) {
+    menu.push({title: 'Login', link: '#', dataToggle: 'modal', dataTarget: '#login'});
   } else { 
-    menu.push('Logout');
-    if (user.role == 'admin') menu.push('Ver asistencias');
+    if (user.role == 'admin') 
+      menu.push({title: 'Dashboard', link: '/dashboard'});
     if (user.role == 'patient') {
-      menu.push('Sacar turno');
-      menu.push('Ver historia clinica');  
+      menu.push({title: 'Sacar turno', link: '#', dataToggle: 'modal', dataTarget: '#newAppointment'});
+      menu.push({title: 'Ver historia clinica', link: '#', dataTarget:''});  
     }
     else if (user.role == 'doctor') {
-      menu.push('Alta de paciente');
-      menu.push('Ver pacientes');
-      menu.push('Ver estudios');
+      menu.push({title: 'Alta de paciente', link: '#', dataToggle: 'modal', dataTarget: '#newPatient'});
+      menu.push({title: 'Ver pacientes', link: '#', dataTarget:''});
+      menu.push({title: 'Ver estudios', link: '#', dataTarget:''});
     }
+    menu.push({title: 'Logout', link: '/logout'});
   }
 
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
-  a.navbar-brand Hospital
+  a.navbar-brand Hospital INET
   button.navbar-toggler(data-toggle='collapse' data-target='navContent' aria-controls='navContent')
     span.navbar-toggler-icon
   div#navContent.collapse.navbar-collapse
     ul.navbar-nav.ml-auto
       each item in menu
         li.nav-item
-          a(data-toggle='modal' data-target='#login').nav-link= item
+          a(href=item.link data-toggle=item.dataToggle data-target=item.dataTarget).nav-link= item.title
           
 include modals.pug          

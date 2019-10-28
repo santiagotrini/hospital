@@ -74,26 +74,9 @@ app.set('views', './views');
 // setear la carpeta public para servir assets estaticos
 app.use(express.static('public'));
 
-// rutas
-// home route
-app.get('/', (req, res, next) => {
-  res.render('index', { user: req.user });
-});
-
-// login route
-app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/' }),
-  (req, res, next) => {
-    res.redirect('/');
-});
-
-// logout route
-app.get('/logout',
-  (req, res) => {
-    req.logout();
-    res.redirect('/');
-});
-
+// importar y vincular los routers de la carpeta routes
+const indexRouter = require('./routes/index');
+app.use('/', indexRouter);
 
 // poner la app a escuchar peticiones
 app.listen(port, () => console.log(`Server listening on port ${port}`));
