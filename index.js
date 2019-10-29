@@ -77,8 +77,47 @@ app.use(express.static('public'));
 // importar y vincular los routers de la carpeta routes
 const indexRouter = require('./routes/index');
 const userRouter  = require('./routes/api/user');
+const appointmentRouter  = require('./routes/api/appointment');
+const attendanceRouter  = require('./routes/api/attendance');
+const sensorRouter  = require('./routes/api/sensor');
 app.use('/', indexRouter);
 app.use('/api', userRouter);
+app.use('/api', appointmentRouter);
+app.use('/api', attendanceRouter);
+app.use('/api', sensorRouter);
+
+// seccion protocolo mqtt para IoT (control de acceso/horario de los medicos)
+// importo la libreria
+const mqtt = require('mqtt');
+// me conecto a un broker
+const client = mqtt.connect(broker);
+// necesito este modelo para guardar en la DB
+const Attendance = require('./models/Attendance');
+
+client.on('connect', () => {
+  // suscribirse a los temas al conectarse
+  console.log(`Web app connected to ${broker}`);
+  client.subscribe('attendance-hospital-inet', err => {
+    if (!err) {
+      console.log('Subscribing on attendance-hospital-inet');
+    }
+  });
+});
+// cuando hay un mensaje en algun tema al que suscribo ejecuto una callback
+client.on('message', (topic, message) => {
+  let data = JSON.parse(message); // el mensaje viene en JSON, lo pasamos a objeto
+  // creo un nuevo objeto y lo guardo en la DB
+  const attendance = new Attendance({
+    sensor: data.sensor,
+    doctor: data.doctor
+  });
+  attendance.save(err => {
+    if (err) throw err;
+    // logeamos en consola para ver que onda
+    console.log(JSON.stringify(data) + '\nsaved in database');
+  });
+});
+// fin seccion mqtt, IoT, etc.
 
 // poner la app a escuchar peticiones
 app.listen(port, () => console.log(`Server listening on port ${port}`));

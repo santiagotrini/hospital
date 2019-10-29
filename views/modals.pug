@@ -19,7 +19,9 @@
       .modal-header
         h5 Solicitar nuevo turno
       .modal-body
-        form(method='post' action='/appointment')
+        form(method='post' action='/api/appointment')
+          if (user)
+            input(type='hidden' value=user._id)
           .form-group
             label Especialidad
             input.form-control(name='specialty')
