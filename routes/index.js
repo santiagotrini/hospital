@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
+// modelo de asistencias para el dashboard
+// o conviene hacer AJAX desde el cliente?
+// primero que funcione, despues hablamos de mejores practicas
+const Attendance = require('../models/Attendance');
+
 // rutas
 // home route
 router.get('/', (req, res, next) => {
@@ -24,7 +29,9 @@ router.get('/logout',
 
 // admin dashboard
 router.get('/dashboard', (req, res) => {
-  res.render('dashboard', { user: req.user });
+  Attendance.find((err, attendances) => {
+    res.render('dashboard', { user: req.user, attendances: attendances });
+  });
 });
 
 module.exports = router;
